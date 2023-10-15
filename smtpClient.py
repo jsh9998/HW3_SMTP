@@ -1,4 +1,4 @@
-from socket import *
+import socket
 
 
 def smtp_client(port=1025, mailserver='127.0.0.1'):
@@ -10,7 +10,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     # Create socket called clientSocket and establish a TCP connection with mailserver and port
     # Fill in start
     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    clientSocket.connect(mailserver,port);
+    clientSocket.connect((mailserver,port));
     # Fill in end
 
     recv = clientSocket.recv(1024).decode()
@@ -20,6 +20,9 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     clientSocket.send(heloCommand.encode())
     recv1 = clientSocket.recv(1024).decode()
     
+    print(recv1) 
+    if recv1[:3] != '250':
+        print('250 reply not received from server.')
 
     # Send MAIL FROM command and handle server response.
     # Fill in start
